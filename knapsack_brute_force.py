@@ -2,11 +2,13 @@ import itertools
 from itertools import product
 import time
 
-
+# Set the indexes for data array
+# 0 = name, 1 = weight, 2 = value, 3 = fitness
 KNAPSACK_WEIGHT_INDEX = 1
 KNAPSACK_VALUE_INDEX = 2
 KNAPSACK_FITNESS_INDEX = 3
 
+# Small knapsack dataset
 knapsack_items = [
     ['Pearls', 3, 4],
     ['Gold', 7, 7],
@@ -18,6 +20,7 @@ knapsack_items = [
     ['Cup', 3, 1],
 ]
 
+# Large knapsack dataset
 # knapsack_items = [
 #     ['Axe', 32252, 68674],
 #     ['Bronze coin', 225790, 471010],
@@ -58,23 +61,23 @@ def get_all_combinations(items):
     return combinations
 
 
-
+# Calculate the fitness of the items selected given a maximum weight
 def calculate_individual_fitness(solution, maximum_weight):
     total_weight = 0
     total_value = 0
-    
+    # Get the values and weight for each item marked with a 1
     for item_index in range(0, len(solution)):
         item = solution[item_index]
         if item == 1:
             total_weight += knapsack_items[item_index][KNAPSACK_WEIGHT_INDEX]
             total_value += knapsack_items[item_index][KNAPSACK_VALUE_INDEX]
-    
+    # Zero fitness if the weight constraint is violated
     if total_weight > maximum_weight:
         return 0
     return total_value
 
 
-
+# Run the brute force algorithm
 def run_brute_force():
     bit_string_size = 8
     best_score = 0
@@ -95,6 +98,7 @@ def run_brute_force():
     print(best_individual)
 
 
+# Execute the brute force approach and measure it's performance
 start_time = time.time()
 run_brute_force()
 end_time = time.time()
